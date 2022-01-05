@@ -30,4 +30,6 @@ public class Snake extends Base {
     public Position moveRight() {
         return new Position(position.getX() + 1,position.getY());
     }
+
+    public Position getPosition() {return position;}
 }

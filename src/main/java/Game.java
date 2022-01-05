@@ -15,7 +15,7 @@ public class Game {
     Snake baby;
     Position position;
 
-    public Game() {
+    public Game(int width, int height) {
         try {
             // configuring the terminal
             TerminalSize terminalSize = new TerminalSize(40, 20);
