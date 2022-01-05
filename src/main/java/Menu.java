@@ -49,7 +49,7 @@ public class Menu {
         while (true) {
             System.out.println("Enter your choice: ");
             try {
-                KeyStroke key = screen.pollInput();
+                KeyStroke key = screen.readInput();
                 if (key.getKeyType() != KeyType.Character) {
                     System.out.println("Input invalid. Please try again.");
                 }
@@ -96,10 +96,9 @@ public class Menu {
             printMenu();
             int choice = getInput();
             doInput(choice);
-
         }
 
-        /*while (true) {
+        while (true) {
             draw();
             KeyStroke key = screen.readInput();
             processKey(key);
@@ -109,7 +108,7 @@ public class Menu {
             if (key.getKeyType() == KeyType.EOF) {
                 break;
             }
-        }*/
+        }
     }
 }
 
