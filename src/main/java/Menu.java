@@ -78,7 +78,7 @@ public class Menu {
     private void doInput(int choice) throws IOException {
         switch (choice) {
             case '1' -> {
-                board.draw(screen.newTextGraphics());
+                draw();
             }
             case '2' -> {
                 printInstructions();
