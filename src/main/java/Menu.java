@@ -11,6 +11,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.*;
 
 public class Menu {
+    int width, height;
     private Screen screen;
     private Game game;
     private Board board;
@@ -18,6 +19,8 @@ public class Menu {
     private boolean val;
 
     public Menu(int width, int height) {
+        this.width = width;
+        this.height = height;
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
             screen = new TerminalScreen(terminal);
@@ -43,14 +46,15 @@ public class Menu {
         textGraphics.putString(21, 3, "1");
         textGraphics.putString(21, 5, "2");
         textGraphics.putString(21, 7, "0");
-        textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(27, 10), '*');
+        textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), '*');
+        textGraphics.putString(0, 12, "Enter your choice: ");
     }
 
     private char getInput() {
         char choice;
 
         while (true) {
-            System.out.println("Enter your choice: ");
+            int pos = 14;
             try {
                 KeyStroke key = screen.readInput();
 
@@ -60,12 +64,14 @@ public class Menu {
                 if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2') {
                     choice = key.getCharacter();
                     return choice;
-                } else {
-                    System.out.println("Input invalid. Please try again.");
                 }
+                textGraphics.putString(0, pos, "Input invalid. Please try again.");
+                screen.refresh();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            pos += 1;
         }
     }
 
@@ -80,6 +86,7 @@ public class Menu {
             }
             case '0' -> {
                 val = true;
+                screen.close();
             }
             default -> System.out.println("Unknown error");
         }
@@ -87,39 +94,47 @@ public class Menu {
 
     private void draw() throws IOException {
         screen.clear();
+        board.draw(screen.newTextGraphics());
         screen.refresh();
-    }
-
-    private void drawMenu() throws IOException {
-        screen.clear();
-        screen.refresh();
-    }
-
-    private void processKey(KeyStroke key) {
-        board.processKey(key);
     }
 
     public void run() throws IOException {
         while (!val) {
+            screen.clear();
             printMenu();
             screen.refresh();
             int choice = getInput();
-            if (choice == '*') break;
             doInput(choice);
         }
     }
 
     private void printInstructions() throws IOException {
+        int pos = 0;
+
+        screen.clear();
         try {
             File f = new File("Instructions.txt");
             BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
             String line = null;
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.print(line);
-                System.out.printf("%n");
+                textGraphics.putString(0, pos, line);
+                screen.refresh();
+                pos += 1;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+        pos += 1;
+
+        while (true) {
+            textGraphics.putString(0, pos, "Press Enter to go back to Menu or Esc to finish: ");
+            pos += 1;
+            screen.refresh();
+            KeyStroke key = screen.readInput();
+            if (key.getKeyType() == KeyType.Enter) run();
+            else if (key.getKeyType() == KeyType.Escape) screen.close();
+            else textGraphics.putString(0, pos, "Input invalid. Please try again.");
+            pos += 1;
         }
     }
 }
