@@ -1,5 +1,6 @@
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -7,14 +8,13 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-
 import java.io.*;
-import java.net.URL;
 
 public class Menu {
     private Screen screen;
     private Game game;
     private Board board;
+    TextGraphics textGraphics;
     private boolean val;
 
     public Menu(int width, int height) {
@@ -25,6 +25,8 @@ public class Menu {
             screen.startScreen();
             screen.doResizeIfNecessary();
 
+            textGraphics = screen.newTextGraphics();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +34,8 @@ public class Menu {
     }
 
     private void printMenu() {
-        TextGraphics textGraphics = screen.newTextGraphics();
+        screen.clear();
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#008000"));
         textGraphics.putString(6, 1, "Main Menu");
         textGraphics.putString(2, 3, "Play Game");
         textGraphics.putString(2, 5, "Instructions");
@@ -43,19 +46,22 @@ public class Menu {
         textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(27, 10), '*');
     }
 
-    private int getInput() {
-        int choice;
+    private char getInput() {
+        char choice;
 
         while (true) {
             System.out.println("Enter your choice: ");
             try {
                 KeyStroke key = screen.readInput();
-                if (key.getKeyType() != KeyType.Character) {
-                    System.out.println("Input invalid. Please try again.");
-                }
-                else if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2') {
+
+                if (key.getKeyType() == KeyType.EOF) return '*';
+                if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') screen.close();
+
+                if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2') {
                     choice = key.getCharacter();
                     return choice;
+                } else {
+                    System.out.println("Input invalid. Please try again.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -63,19 +69,17 @@ public class Menu {
         }
     }
 
-    private void doInput(int choice) throws FileNotFoundException {
+    private void doInput(int choice) throws IOException {
         switch (choice) {
-            case 1 -> {
+            case '1' -> {
                 board.draw(screen.newTextGraphics());
             }
-            case 2 -> {
-                URL path = Menu.class.getResource("Instructions.txt");
-                File f = new File(path.getFile());
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
-            }
-            case 0 -> {
+            case '2' -> {
+                printInstructions();
                 val = true;
-                break;
+            }
+            case '0' -> {
+                val = true;
             }
             default -> System.out.println("Unknown error");
         }
@@ -83,7 +87,11 @@ public class Menu {
 
     private void draw() throws IOException {
         screen.clear();
-        board.draw(screen.newTextGraphics());
+        screen.refresh();
+    }
+
+    private void drawMenu() throws IOException {
+        screen.clear();
         screen.refresh();
     }
 
@@ -94,20 +102,24 @@ public class Menu {
     public void run() throws IOException {
         while (!val) {
             printMenu();
+            screen.refresh();
             int choice = getInput();
+            if (choice == '*') break;
             doInput(choice);
         }
+    }
 
-        while (true) {
-            draw();
-            KeyStroke key = screen.readInput();
-            processKey(key);
-            if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {
-                screen.close();
+    private void printInstructions() throws IOException {
+        try {
+            File f = new File("Instructions.txt");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.print(line);
+                System.out.printf("%n");
             }
-            if (key.getKeyType() == KeyType.EOF) {
-                break;
-            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
