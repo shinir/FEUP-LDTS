@@ -13,9 +13,10 @@ import java.util.Random;
 public class Board {
     private int width;
     private int height;
+    private int points = 0;
     private Snake baby;
     private List<Wall> walls;
-    private List<Apple> apples;
+    private List<Apple> apples = new ArrayList<>();;
     private BoardMenu boardMenu;
     public boolean available = true;
 
@@ -59,9 +60,13 @@ public class Board {
             baby.setPosition(position);
         }
         else {
+            // TO DO:
+            // CREATE A POP UP IN CASE YOU HIT A WALL
+            // AND CLOSE THE GAME :)
             System.out.println("You went out of boundaries!");
         }
         retrieveApples(position);
+        if(apples.isEmpty()) createApples();
     }
 
     private boolean canSnakeMove(Position position) {
@@ -77,7 +82,6 @@ public class Board {
 
     private List<Apple> createApples() {
         Random random = new Random();
-        ArrayList<Apple> apples = new ArrayList<>();
         apples.add(new Apple(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
         return apples;
     }
@@ -86,6 +90,7 @@ public class Board {
         for(Apple apple : apples)
             if(apple.getPosition().equals(baby.getPosition())) {
                 apples.remove(apple);
+                points++;
                 break;
             }
     }
