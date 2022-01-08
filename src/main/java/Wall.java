@@ -7,17 +7,8 @@ public class Wall extends Base {
     public Wall(int x, int y) {
         super(x, y);
     }
+
     public void draw(TextGraphics graphics) {
-        graphics.setBackgroundColor(TextColor.Factory.fromString("#FF5722"));
-        graphics.putString(new TerminalPosition(position.getX(), position.getY()), " ");
-    }
-
-    public Position getPosition() {
-
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
+        graphics.putString(new TerminalPosition(position.getX(), position.getY()), "#");
     }
 }

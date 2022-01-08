@@ -17,6 +17,7 @@ public class Menu {
     private Board board;
     TextGraphics textGraphics;
     private boolean val;
+    private char choice;
 
     public Menu(int width, int height) {
         this.width = width;
@@ -51,17 +52,15 @@ public class Menu {
     }
 
     private char getInput() {
-        char choice;
-
+        int pos = 14;
         while (true) {
-            int pos = 14;
             try {
                 KeyStroke key = screen.readInput();
 
                 if (key.getKeyType() == KeyType.EOF) return '*';
-                if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') screen.close();
+                else if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') screen.close();
 
-                if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2') {
+                else if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2') {
                     choice = key.getCharacter();
                     return choice;
                 }
@@ -78,7 +77,9 @@ public class Menu {
     private void doInput(int choice) throws IOException {
         switch (choice) {
             case '1' -> {
-                draw();
+                game = new Game(screen);
+                screen = game.screen;
+                game.run();
             }
             case '2' -> {
                 printInstructions();
@@ -94,7 +95,7 @@ public class Menu {
 
     private void draw() throws IOException {
         screen.clear();
-        board.draw(screen.newTextGraphics());
+        game.board.draw(screen.newTextGraphics());
         screen.refresh();
     }
 
@@ -132,10 +133,9 @@ public class Menu {
             screen.refresh();
             KeyStroke key = screen.readInput();
             if (key.getKeyType() == KeyType.Enter) run();
-            else if (key.getKeyType() == KeyType.Escape) screen.close();
+            else if (key.getKeyType() == KeyType.Escape) System.exit(0);
             else textGraphics.putString(0, pos, "Input invalid. Please try again.");
             pos += 1;
         }
     }
 }
-
