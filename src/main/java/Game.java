@@ -50,8 +50,4 @@ public class Game {
         }
         screen.close();
     }
-
-    public void close() throws IOException {
-
-    }
 }

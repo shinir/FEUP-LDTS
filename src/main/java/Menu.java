@@ -43,10 +43,12 @@ public class Menu {
         textGraphics.putString(6, 1, "Main Menu");
         textGraphics.putString(2, 3, "Play Game");
         textGraphics.putString(2, 5, "Instructions");
-        textGraphics.putString(2, 7, "Exit");
+        textGraphics.putString(2,7, "Settings");
+        textGraphics.putString(2, 9, "Exit");
         textGraphics.putString(21, 3, "1");
         textGraphics.putString(21, 5, "2");
-        textGraphics.putString(21, 7, "0");
+        textGraphics.putString(21, 9, "3");
+        textGraphics.putString(21, 9, "0");
         textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), '*');
         textGraphics.putString(0, 12, "Enter your choice: ");
     }
@@ -60,7 +62,7 @@ public class Menu {
                 if (key.getKeyType() == KeyType.EOF) return '*';
                 else if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') screen.close();
 
-                else if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2') {
+                else if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2' || key.getCharacter() == '3') {
                     choice = key.getCharacter();
                     return choice;
                 }
@@ -85,9 +87,12 @@ public class Menu {
                 printInstructions();
                 val = true;
             }
+            case '3' -> {
+
+            }
             case '0' -> {
                 val = true;
-                screen.close();
+                System.exit(0);
             }
             default -> System.out.println("Unknown error");
         }

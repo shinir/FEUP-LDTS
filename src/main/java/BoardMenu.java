@@ -14,7 +14,6 @@ import java.io.IOException;
 public class BoardMenu {
     Screen screen;
     TextGraphics textGraphics;
-    char value;
 
     public BoardMenu() {
         try {
