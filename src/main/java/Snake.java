@@ -17,21 +17,21 @@ public class Snake extends Base {
 
     public Position moveDown() {
         setPosition(new Position(position.getX(),position.getY() + 1));
-        return new Position(position.getX(),position.getY());
+        return position;
     }
 
     public Position moveUp() {
         setPosition(new Position(position.getX(),position.getY() - 1));
-        return new Position(position.getX(),position.getY());
+        return position;
     }
 
     public Position moveLeft() {
         setPosition(new Position(position.getX() - 1,position.getY()));
-        return new Position(position.getX(),position.getY());
+        return position;
     }
 
     public Position moveRight() {
         setPosition(new Position(position.getX() + 1,position.getY()));
-        return new Position(position.getX(),position.getY());
+        return position;
     }
 }

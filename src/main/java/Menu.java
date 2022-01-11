@@ -98,12 +98,6 @@ public class Menu {
         }
     }
 
-    private void draw() throws IOException {
-        screen.clear();
-        game.board.draw(screen.newTextGraphics());
-        screen.refresh();
-    }
-
     public void run() throws IOException {
         while (!val) {
             screen.clear();

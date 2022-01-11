@@ -19,6 +19,9 @@ public class Board {
     private List<Apple> apples = new ArrayList<>();;
     private BoardMenu boardMenu;
     public boolean available = true;
+    public int snakeX[] = new int[width * height];
+    public int snakeY[] = new int[width * height];
+    public int size;
 
     public Board(int width, int height) {
         this.width = width;
@@ -91,6 +94,7 @@ public class Board {
             if(apple.getPosition().equals(baby.getPosition())) {
                 apples.remove(apple);
                 points++;
+                size++;
                 break;
             }
     }
