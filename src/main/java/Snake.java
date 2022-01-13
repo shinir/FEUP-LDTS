@@ -34,4 +34,8 @@ public class Snake extends Base {
         setPosition(new Position(position.getX() + 1,position.getY()));
         return position;
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }
