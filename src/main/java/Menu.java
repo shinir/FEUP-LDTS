@@ -1,4 +1,3 @@
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -8,12 +7,16 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+
 import java.io.*;
 
 public class Menu {
+    // SIZE OF THE MENU
     int width, height;
+    public TerminalSize terminalSize;
+
     private Screen screen;
-    private Game game;
+    private Game snake;
     private Board board;
     TextGraphics textGraphics;
     private boolean val;
@@ -23,7 +26,12 @@ public class Menu {
         this.width = width;
         this.height = height;
         try {
-            Terminal terminal = new DefaultTerminalFactory().createTerminal();
+            // configuring the terminal
+            TerminalSize terminalSize = new TerminalSize(40, 20);
+            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+            Terminal terminal = terminalFactory.createTerminal();
+
+            // configuring the screen
             screen = new TerminalScreen(terminal);
             screen.setCursorPosition(null);
             screen.startScreen();
@@ -37,20 +45,30 @@ public class Menu {
         board = new Board(width, height);
     }
 
+    public void run() throws IOException {
+        while (!val) {
+            screen.clear();
+            printMenu();
+            screen.refresh();
+            int choice = getInput();
+            doInput(choice);
+        }
+    }
+
     private void printMenu() {
         screen.clear();
-        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#008000"));
-        textGraphics.putString(6, 1, "Main Menu");
-        textGraphics.putString(2, 3, "Play Game");
-        textGraphics.putString(2, 5, "Instructions");
-        textGraphics.putString(2,7, "Settings");
-        textGraphics.putString(2, 9, "Exit");
-        textGraphics.putString(21, 3, "1");
-        textGraphics.putString(21, 5, "2");
-        textGraphics.putString(21, 9, "3");
-        textGraphics.putString(21, 9, "0");
-        textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), '*');
-        textGraphics.putString(0, 12, "Enter your choice: ");
+        textGraphics.setForegroundColor(TextColor.Factory.fromString("#bf0f0f"));
+        textGraphics.putString(15, 1, "S N A K E");
+        textGraphics.putString(10, 4, "Play Game");
+        textGraphics.putString(10, 6, "Instructions");
+        textGraphics.putString(10,8, "Settings");
+        textGraphics.putString(10, 10, "Exit");
+        textGraphics.putString(25, 4, "1");
+        textGraphics.putString(25, 6, "2");
+        textGraphics.putString(25, 8, "3");
+        textGraphics.putString(25, 10, "0");
+        //textGraphics.TextColor.Factory.fromString(String.valueOf(Color.red);
+        textGraphics.drawLine(width, 0, width, height, ' ');
     }
 
     private char getInput() {
@@ -79,9 +97,9 @@ public class Menu {
     private void doInput(int choice) throws IOException {
         switch (choice) {
             case '1' -> {
-                game = new Game(screen);
-                screen = game.screen;
-                game.run();
+                snake = new Game(screen);
+                screen = snake.screen;
+                snake.run();
             }
             case '2' -> {
                 printInstructions();
@@ -98,22 +116,12 @@ public class Menu {
         }
     }
 
-    public void run() throws IOException {
-        while (!val) {
-            screen.clear();
-            printMenu();
-            screen.refresh();
-            int choice = getInput();
-            doInput(choice);
-        }
-    }
-
     private void printInstructions() throws IOException {
         int pos = 0;
 
         screen.clear();
         try {
-            File f = new File("Instructions.txt");
+            File f = new File("src/main/resources/Instructions.txt");
             BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
             String line = null;
             while ((line = bufferedReader.readLine()) != null) {
@@ -127,7 +135,8 @@ public class Menu {
         pos += 1;
 
         while (true) {
-            textGraphics.putString(0, pos, "Press Enter to go back to Menu or Esc to finish: ");
+            textGraphics.putString(1, pos, "Enter to go back");
+            textGraphics.putString(1, pos+1, "Esc to finish");
             pos += 1;
             screen.refresh();
             KeyStroke key = screen.readInput();

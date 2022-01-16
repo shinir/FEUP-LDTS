@@ -1,4 +1,4 @@
-import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
 public class Wall extends Base {
@@ -8,6 +8,6 @@ public class Wall extends Base {
     }
 
     public void draw(TextGraphics graphics) {
-        graphics.putString(new TerminalPosition(position.getX(), position.getY()), "#");
+        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('#')[0]);
     }
 }

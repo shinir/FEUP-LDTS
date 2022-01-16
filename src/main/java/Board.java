@@ -1,57 +1,58 @@
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 
 import java.io.IOException;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.swing.*;
 
-public class Board {
+public class Board extends JFrame {
+    // SIZE OF THE BOARD
     private int width;
     private int height;
+
+    // VARIABLES RELATED TO THE GAME
     private int points = 0;
-    private Snake baby;
+    public BoardMenu boardMenu;
+    public Snake baby;
     private List<Wall> walls;
     private List<Apple> apples = new ArrayList<>();
-    private BoardMenu boardMenu;
+    int speed = 1;
     public boolean available = true;
-    public Position snake[] = new Position[width * height];
     public int size;
+    public boolean retrieved = false;
+
 
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        baby = new Snake(width/2,height/2);
-        //snake[0] = baby.position;
         this.walls = createWalls();
         this.apples = createApples();
-        this.size = 1;
+        baby = new Snake(Direction.UP);
+        this.size = 3;
     }
 
     private List<Wall> createWalls() {
         walls = new ArrayList<>();
-
-        for (int w = 0; w < width; w++) {
-            walls.add(new Wall(w, 0));
-            walls.add(new Wall(w, height - 1));
+        for (int c = 0; c < width; c++) {
+            walls.add(new Wall(c, 0));
+            walls.add(new Wall(c, height - 1));
         }
-        for (int i = 1; i < height - 1; i++) {
-            walls.add(new Wall(0, i));
-            walls.add(new Wall(width - 1, i));
+        for (int r = 1; r < height - 1; r++) {
+            walls.add(new Wall(0, r));
+            walls.add(new Wall(width - 1, r));
         }
         return walls;
     }
 
     public void processKey(KeyStroke key) throws IOException {
         switch (key.getKeyType()) {
-            case ArrowUp -> moveSnake(baby.moveUp());
-            case ArrowDown -> moveSnake(baby.moveDown());
-            case ArrowLeft -> moveSnake(baby.moveLeft());
-            case ArrowRight -> moveSnake(baby.moveRight());
+            case ArrowUp -> baby.setDirection(Direction.UP);
+            case ArrowDown -> baby.setDirection(Direction.DOWN);
+            case ArrowLeft -> baby.setDirection(Direction.LEFT);
+            case ArrowRight -> baby.setDirection(Direction.RIGHT);
             case Escape -> {
                 boardMenu = new BoardMenu();
                 boardMenu.run();
@@ -59,28 +60,28 @@ public class Board {
         }
     }
 
-    public void moveSnake(Position position) {
-        if (canSnakeMove(position)) {
-            baby.setPosition(position);
+    public void moveSnake() throws IOException {
+        if (canSnakeMove(baby.getHead()) ) {
+            baby.move();
         }
         else {
-            // TO DO:
-            // CREATE A POP UP IN CASE YOU HIT A WALL
-            // AND CLOSE THE GAME :)
-            System.out.println("You went out of boundaries!");
+            boardMenu = new BoardMenu();
+            boardMenu.gameOverMenu();
+            System.exit(0);
         }
-        retrieveApples(position);
+        retrieved = false;
+        retrieveApples(baby.getHead());
         if(apples.isEmpty()) createApples();
     }
 
     private boolean canSnakeMove(Position position) {
-        if (position.getX() < 0 || position.getX() > width) return false;
-        else if (position.getY() < 0 || position.getY() > height) return false;
-        for ( Wall wall : walls) {
-            if (wall.getPosition().equals(position)) {
+        for(Wall wall : walls)
+            if (wall.getPosition().equals(position))
                 return false;
-            }
-        }
+        if (position.getX() <= 0 || position.getX() >= width)
+            return false;
+        else if (position.getY() <= 0 && position.getY() >= height)
+            return false;
         return true;
     }
 
@@ -92,19 +93,19 @@ public class Board {
 
     private void retrieveApples(Position position) {
         for(Apple apple : apples)
-            if(apple.getPosition().equals(baby.getPosition())) {
+            if(apple.getPosition().equals(baby.getHead())) {
                 apples.remove(apple);
+                baby.increase();
                 points++;
-                drawSnake(baby.position);
+                retrieved = true;
                 break;
             }
     }
 
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
-        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
-        graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
-        baby.draw(graphics);
+        graphics.setForegroundColor(TextColor.Factory.fromString("#45733C"));
+        drawSnake(graphics);
 
         for (Wall wall : walls) {
             wall.draw(graphics);
@@ -113,11 +114,16 @@ public class Board {
             apple.draw(graphics);
     }
 
-    private void drawSnake(Position position) {
+    public void drawSnake(TextGraphics graphics) {
+        Position head = baby.getHead();
 
-        size++;
-        Snake body = new Snake(position.getX(), position.getY() - 1);
-        snake[size - 1] = body.position;
-        body.draw(boardMenu.textGraphics);
+        for(Position pos : baby.getBody()) {
+            if(!pos.equals(head)) {
+                graphics.putString(pos.getX(), pos.getY(), "o");
+            }
+            else {
+                graphics.putString(pos.getX(), pos.getY(), "*");
+            }
+        }
     }
 }
