@@ -29,14 +29,30 @@ public class Snake {
         body.removeFirst();
 
         switch (way) {
-            case UP -> head = new Position(head.getX(), head.getY() - 1);
-            case DOWN -> head = new Position(head.getX(), head.getY() + 1);
-            case RIGHT -> head = new Position(head.getX() + 1, head.getY());
-            case LEFT -> head = new Position(head.getX() - 1, head.getY());
+            case UP -> head = moveUp();
+            case DOWN -> head = moveDown();
+            case RIGHT -> head = moveRight();
+            case LEFT -> head = moveLeft();
             default -> throw new IllegalArgumentException("Direction unavailable");
         }
         body.addLast(head);
     }
+
+    public Position moveDown() {
+        return new Position(getHead().getX(), getHead().getY() + 1);
+    }
+
+    public Position moveUp() {
+        return new Position(getHead().getX(), getHead().getY() - 1);
+    }
+
+    public Position moveLeft() {
+        return new Position(getHead().getX() - 1, getHead().getY());
+    }
+
+    public Position moveRight() { return new Position(getHead().getX() + 1, getHead().getY()); }
+
+
 
     // everytime the snake eats an apple it should increase size
     public void increase() {

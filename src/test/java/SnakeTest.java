@@ -6,37 +6,40 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SnakeTest {
     Snake snake;
-    Direction direction;
 
     @BeforeEach
     public void createSnake() {
         snake = new Snake(Direction.UP);
     }
 
-    /*
     @Test
     public void testDown() {
-        direction = Direction.DOWN;
-        snake.move();
-        assertEquals(1, snake.getPosition().getY());
+        int ogY = snake.getHead().getY();
+        assertEquals(ogY + 1, snake. moveDown().getY());
     }
 
     @Test
     public void testUp() {
-        snake.moveUp();
-        assertEquals(-1, snake.getPosition().getY());
+        int ogY = snake.getHead().getY();
+        assertEquals(ogY - 1, snake.moveUp().getY());
     }
 
     @Test
     public void testLeft() {
-        snake.moveLeft();
-        assertEquals(-1, snake.getPosition().getX());
+        int ogX = snake.getHead().getX();
+        assertEquals(ogX - 1, snake.moveLeft().getX());
     }
 
     @Test
     public void testRight() {
-        snake.moveRight();
-        assertEquals(1, snake.getPosition().getX());
-    }*/
+        int ogX = snake.getHead().getX();
+        assertEquals(ogX + 1, snake.moveRight().getX());
+    }
 
+    @Test
+    public void testIncrease() {
+        int ogSize = snake.size;
+        snake.increase();
+        assertEquals(ogSize++, snake.size);
+    }
 }
