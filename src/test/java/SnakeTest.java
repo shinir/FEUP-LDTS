@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +8,7 @@ public class SnakeTest {
 
     @BeforeEach
     public void createSnake() {
-        snake = new Snake(Direction.UP);
+        snake = new Snake(Direction.UP, 1);
     }
 
     @Test
@@ -40,6 +39,6 @@ public class SnakeTest {
     public void testIncrease() {
         int ogSize = snake.size;
         snake.increase();
-        assertEquals(ogSize++, snake.size);
+        assertEquals(++ogSize, snake.size);
     }
 }

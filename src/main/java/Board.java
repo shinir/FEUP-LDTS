@@ -19,18 +19,19 @@ public class Board extends JFrame {
     public Snake baby;
     private List<Wall> walls;
     private List<Apple> apples = new ArrayList<>();
-    int speed = 1;
+    int speed;
     public boolean available = true;
     public int size;
     public boolean retrieved = false;
 
 
-    public Board(int width, int height) {
+    public Board(int width, int height, int speed) {
         this.width = width;
         this.height = height;
         this.walls = createWalls();
         this.apples = createApples();
-        baby = new Snake(Direction.UP);
+        this.speed = speed;
+        baby = new Snake(Direction.UP, speed);
         this.size = 3;
     }
 
@@ -74,9 +75,10 @@ public class Board extends JFrame {
     }
 
     private boolean canSnakeMove(Position position) {
-        for(Wall wall : walls)
+        for (Wall wall : walls) {
             if (wall.getPosition().equals(position))
                 return false;
+        }
         if (position.getX() <= 0 || position.getX() >= width)
             return false;
         else return position.getY() > 0 || position.getY() < height;

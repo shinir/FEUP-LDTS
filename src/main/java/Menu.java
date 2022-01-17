@@ -16,7 +16,8 @@ public class Menu {
 
     private Screen screen;
     TextGraphics textGraphics;
-    private boolean val;
+    private boolean val, settings;
+    int speed = 1;
 
     public Menu(int width, int height) {
         this.width = width;
@@ -38,7 +39,7 @@ public class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        new Board(width, height);
+        new Board(width, height, speed);
     }
 
     public void run() throws IOException {
@@ -92,7 +93,7 @@ public class Menu {
     private void doInput(int choice) throws IOException {
         switch (choice) {
             case '1' -> {
-                Game snake = new Game(screen);
+                Game snake = new Game(screen, speed);
                 screen = snake.screen;
                 snake.run();
             }
@@ -101,7 +102,8 @@ public class Menu {
                 val = true;
             }
             case '3' -> {
-
+                printSettings();
+                val = true;
             }
             case '0' -> {
                 val = true;
@@ -139,6 +141,36 @@ public class Menu {
             else if (key.getKeyType() == KeyType.Escape) System.exit(0);
             else textGraphics.putString(0, pos, "Input invalid. Please try again.");
             pos += 1;
+        }
+    }
+
+    private void printSettings() throws IOException {
+        settings = true;
+        screen.clear();
+        textGraphics.setForegroundColor(TextColor.Factory.fromString("#bf0f0f"));
+        textGraphics.putString(3, 5, "< Increase Speed >");
+        textGraphics.drawLine(width, 0, width, height, ' ');
+        textGraphics.putString(11, 7, String.valueOf(speed));
+        screen.refresh();
+
+        while (settings) {
+            KeyStroke key = screen.readInput();
+            inputSettings(key);
+            textGraphics.putString(11, 7, String.valueOf(speed));
+            screen.refresh();
+        }
+    }
+
+    private void inputSettings(KeyStroke key) throws IOException {
+        switch (key.getKeyType()) {
+            case ArrowRight -> speed++;
+            case ArrowLeft -> speed--;
+            case Escape -> {
+                settings = false;
+                run();
+            }
+
+            default -> System.out.println("Unknown error");
         }
     }
 }
