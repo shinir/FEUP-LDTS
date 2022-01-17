@@ -25,7 +25,8 @@ public class Snake {
 
     // function to move the snake
     public void move() {
-        Position head = getHead();
+        getHead();
+        Position head;
         body.removeFirst();
 
         switch (way) {

@@ -4,8 +4,6 @@ import com.googlecode.lanterna.screen.Screen;
 
 import java.io.IOException;
 
-import static javax.swing.plaf.basic.BasicGraphicsUtils.drawString;
-
 public class Game {
     Screen screen;
     TextGraphics graphics;

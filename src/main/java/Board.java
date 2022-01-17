@@ -10,8 +10,8 @@ import javax.swing.*;
 
 public class Board extends JFrame {
     // SIZE OF THE BOARD
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     // VARIABLES RELATED TO THE GAME
     private int points = 0;
@@ -66,11 +66,10 @@ public class Board extends JFrame {
         }
         else {
             boardMenu = new BoardMenu();
-            boardMenu.gameOverMenu();
-            System.exit(0);
+            boardMenu.gameOverMenu(points);
         }
         retrieved = false;
-        retrieveApples(baby.getHead());
+        retrieveApples();
         if(apples.isEmpty()) createApples();
     }
 
@@ -80,9 +79,7 @@ public class Board extends JFrame {
                 return false;
         if (position.getX() <= 0 || position.getX() >= width)
             return false;
-        else if (position.getY() <= 0 && position.getY() >= height)
-            return false;
-        return true;
+        else return position.getY() > 0 || position.getY() < height;
     }
 
     private List<Apple> createApples() {
@@ -91,7 +88,7 @@ public class Board extends JFrame {
         return apples;
     }
 
-    private void retrieveApples(Position position) {
+    private void retrieveApples() {
         for(Apple apple : apples)
             if(apple.getPosition().equals(baby.getHead())) {
                 apples.remove(apple);

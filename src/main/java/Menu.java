@@ -13,14 +13,10 @@ import java.io.*;
 public class Menu {
     // SIZE OF THE MENU
     int width, height;
-    public TerminalSize terminalSize;
 
     private Screen screen;
-    private Game snake;
-    private Board board;
     TextGraphics textGraphics;
     private boolean val;
-    private char choice;
 
     public Menu(int width, int height) {
         this.width = width;
@@ -42,7 +38,7 @@ public class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        board = new Board(width, height);
+        new Board(width, height);
     }
 
     public void run() throws IOException {
@@ -81,8 +77,7 @@ public class Menu {
                 else if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') screen.close();
 
                 else if (key.getCharacter() == '0' || key.getCharacter() == '1' || key.getCharacter() == '2' || key.getCharacter() == '3') {
-                    choice = key.getCharacter();
-                    return choice;
+                    return key.getCharacter();
                 }
                 textGraphics.putString(0, pos, "Input invalid. Please try again.");
                 screen.refresh();
@@ -97,7 +92,7 @@ public class Menu {
     private void doInput(int choice) throws IOException {
         switch (choice) {
             case '1' -> {
-                snake = new Game(screen);
+                Game snake = new Game(screen);
                 screen = snake.screen;
                 snake.run();
             }
@@ -123,7 +118,7 @@ public class Menu {
         try {
             File f = new File("src/main/resources/Instructions.txt");
             BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
-            String line = null;
+            String line;
             while ((line = bufferedReader.readLine()) != null) {
                 textGraphics.putString(0, pos, line);
                 screen.refresh();

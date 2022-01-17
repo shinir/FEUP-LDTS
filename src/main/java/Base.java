@@ -11,9 +11,5 @@ abstract class Base {
         return position;
     }
 
-    public void setPosition (Position pos) {
-        position.setX(pos.getX());
-        position.setY(pos.getY());
-    }
     abstract void draw(TextGraphics graphics);
 }
