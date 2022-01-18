@@ -8,7 +8,7 @@ public class SnakeTest {
 
     @BeforeEach
     public void createSnake() {
-        snake = new Snake(Direction.UP, 1);
+        snake = new Snake(Direction.UP);
     }
 
     @Test

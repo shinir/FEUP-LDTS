@@ -19,7 +19,7 @@ public class BoardTest {
     @BeforeEach
     public void createBoard() {
         test = new Board(width, height, speed);
-        baby = new Snake(Direction.UP, 1);
+        baby = new Snake(Direction.UP);
     }
 
     @Test

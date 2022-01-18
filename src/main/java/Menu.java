@@ -16,6 +16,7 @@ public class Menu {
 
     private Screen screen;
     TextGraphics textGraphics;
+    Options options;
     private boolean val, settings;
     int speed = 1;
 
