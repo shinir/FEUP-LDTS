@@ -149,6 +149,7 @@ public class Menu {
         screen.clear();
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#bf0f0f"));
         textGraphics.putString(3, 5, "< Increase Speed >");
+        textGraphics.putString(1, 12, "Press Esc to return");
         textGraphics.drawLine(width, 0, width, height, ' ');
         textGraphics.putString(11, 7, String.valueOf(speed));
         screen.refresh();
