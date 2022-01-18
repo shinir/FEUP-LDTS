@@ -93,24 +93,31 @@ public class Menu {
 
     private void doInput(int choice) throws IOException {
         switch (choice) {
-            case '1' -> {
+            case '1' : {
                 Game snake = new Game(screen, speed);
                 screen = snake.screen;
                 snake.run();
+                break;
             }
-            case '2' -> {
+            case '2' : {
                 printInstructions();
                 val = true;
+                break;
             }
-            case '3' -> {
+            case '3' : {
                 printSettings();
                 val = true;
+                break;
             }
-            case '0' -> {
+            case '0' : {
                 val = true;
                 System.exit(0);
+                break;
             }
-            default -> System.out.println("Unknown error");
+            default : {
+                System.out.println("Unknown error");
+                break;
+            }
         }
     }
 
@@ -166,10 +173,22 @@ public class Menu {
 
     private void inputSettings(KeyStroke key) {
         switch (key.getKeyType()) {
-            case ArrowRight -> speed++;
-            case ArrowLeft -> speed--;
-            case Escape -> settings = false;
-            default -> System.out.println("Unknown error");
+            case ArrowRight : {
+                speed++;
+                break;
+            }
+            case ArrowLeft : {
+                speed--;
+                break;
+            }
+            case Escape : {
+                settings = false;
+                break;
+            }
+            default : {
+                System.out.println("Unknown error");
+                break;
+            }
         }
     }
 }

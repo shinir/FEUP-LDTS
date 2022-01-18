@@ -49,9 +49,18 @@ public class BoardMenu {
 
     private void doInput(KeyStroke key) throws IOException {
         switch (key.getCharacter()) {
-            case 'y' -> System.exit(0);
-            case 'n' -> screen.close();
-            default -> System.out.println("Unknown error");
+            case 'y' : {
+                System.exit(0);
+                break;
+            }
+            case 'n' : {
+                screen.close();
+                break;
+            }
+            default : {
+                System.out.println("Unknown error");
+                break;
+            }
         }
     }
 

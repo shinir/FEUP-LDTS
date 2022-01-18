@@ -46,11 +46,25 @@ public class Snake {
         body.removeFirst();
 
         switch (way) {
-            case UP -> head = moveUp();
-            case DOWN -> head = moveDown();
-            case RIGHT -> head = moveRight();
-            case LEFT -> head = moveLeft();
-            default -> throw new IllegalArgumentException("Direction unavailable");
+            case UP : {
+                head = moveUp();
+                break;
+            }
+            case DOWN : {
+                head = moveDown();
+                break;
+            }
+            case RIGHT : {
+                head = moveRight();
+                break;
+            }
+            case LEFT : {
+                head = moveLeft();
+                break;
+            }
+            default : {
+                throw new IllegalArgumentException("Direction unavailable");
+            }
         }
         body.addLast(head);
     }

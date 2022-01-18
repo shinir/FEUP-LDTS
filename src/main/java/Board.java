@@ -50,15 +50,30 @@ public class Board extends JFrame {
 
     public void processKey(KeyStroke key) throws IOException {
         switch (key.getKeyType()) {
-            case ArrowUp -> baby.setDirection(Direction.UP);
-            case ArrowDown -> baby.setDirection(Direction.DOWN);
-            case ArrowLeft -> baby.setDirection(Direction.LEFT);
-            case ArrowRight -> baby.setDirection(Direction.RIGHT);
-            case Escape -> {
+            case ArrowUp : {
+                baby.setDirection(Direction.UP);
+                break;
+            }
+            case ArrowDown : {
+                baby.setDirection(Direction.DOWN);
+                break;
+            }
+            case ArrowLeft : {
+                baby.setDirection(Direction.LEFT);
+            }
+            case ArrowRight : {
+                baby.setDirection(Direction.RIGHT);
+                break;
+            }
+            case Escape : {
                 boardMenu = new BoardMenu();
                 boardMenu.run();
+                break;
             }
-            default -> moveSnake();
+            default : {
+                moveSnake();
+                break;
+            }
         }
     }
 
