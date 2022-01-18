@@ -160,16 +160,14 @@ public class Menu {
             textGraphics.putString(11, 7, String.valueOf(speed));
             screen.refresh();
         }
+        run();
     }
 
-    private void inputSettings(KeyStroke key) throws IOException {
+    private void inputSettings(KeyStroke key) {
         switch (key.getKeyType()) {
             case ArrowRight -> speed++;
             case ArrowLeft -> speed--;
-            case Escape -> {
-                settings = false;
-                run();
-            }
+            case Escape -> settings = false;
             default -> System.out.println("Unknown error");
         }
     }

@@ -5,7 +5,6 @@ import java.util.LinkedList;
 public class Snake {
     // SIZE OF THE SNAKE
     public int size = 3;
-    int speed;
 
     // SNAKE POSITION
     // Initial position will be the center of the screen
@@ -16,8 +15,7 @@ public class Snake {
     public boolean status;
 
     // CONSTRUCTOR
-    public Snake(Direction start, int speed) {
-        this.speed = speed;
+    public Snake(Direction start) {
         body = new LinkedList<>();
 
         for (int i = 0; i < size; i++) {
@@ -58,18 +56,18 @@ public class Snake {
     }
 
     public Position moveDown() {
-        return new Position(getHead().getX(), getHead().getY() + speed);
+        return new Position(getHead().getX(), getHead().getY() + 1);
     }
 
     public Position moveUp() {
-        return new Position(getHead().getX(), getHead().getY() - speed);
+        return new Position(getHead().getX(), getHead().getY() - 1);
     }
 
     public Position moveLeft() {
-        return new Position(getHead().getX() - speed, getHead().getY());
+        return new Position(getHead().getX() - 1, getHead().getY());
     }
 
-    public Position moveRight() { return new Position(getHead().getX() + speed, getHead().getY()); }
+    public Position moveRight() { return new Position(getHead().getX() + 1, getHead().getY()); }
 
     // everytime the snake eats an apple it should increase size
     public void increase() {

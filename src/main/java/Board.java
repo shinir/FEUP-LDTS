@@ -31,7 +31,7 @@ public class Board extends JFrame {
         this.walls = createWalls();
         this.apples = createApples();
         this.speed = speed;
-        baby = new Snake(Direction.UP, speed);
+        baby = new Snake(Direction.UP);
         this.size = 3;
     }
 
@@ -64,10 +64,12 @@ public class Board extends JFrame {
 
     public boolean moveSnake() throws IOException {
         if (canSnakeMove(baby.getHead())) {
-            baby.move();
-            retrieved = false;
-            retrieveApples();
-            if(apples.isEmpty()) createApples();
+            for (int i = 1; i <= speed; i++) {
+                baby.move();
+                retrieved = false;
+                retrieveApples();
+                if (apples.isEmpty()) createApples();
+            }
             return true;
         }
         else {
