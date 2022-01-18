@@ -7,7 +7,7 @@ public class PositionTest {
     Position here, there;
 
     @BeforeEach
-    public void creatPosition() {
+    public void createPosition() {
         here = new Position(0,0);
         there = new Position(1,0);
     }

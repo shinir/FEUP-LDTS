@@ -81,6 +81,10 @@ public class Board extends JFrame {
     }
 
     private boolean canSnakeMove(Position position) {
+
+        for(int i = 0; i < baby.getBody().size() - 1; i++)
+            if (baby.getBody().get(i).equals(baby.getHead()))
+                return false;
         for (Wall wall : walls) {
             if (wall.getPosition().equals(baby.getHead()))
                 return false;
