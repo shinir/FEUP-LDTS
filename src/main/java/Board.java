@@ -14,7 +14,7 @@ public class Board extends JFrame {
     private final int height;
 
     // VARIABLES RELATED TO THE GAME
-    private int points = 0;
+    public int points = 0;
     public BoardMenu boardMenu;
     public Snake baby;
     private List<Wall> walls;
@@ -35,7 +35,7 @@ public class Board extends JFrame {
         this.size = 3;
     }
 
-    private List<Wall> createWalls() {
+    public List<Wall> createWalls() {
         walls = new ArrayList<>();
         for (int c = 0; c < width; c++) {
             walls.add(new Wall(c, 0));
@@ -58,25 +58,29 @@ public class Board extends JFrame {
                 boardMenu = new BoardMenu();
                 boardMenu.run();
             }
+            default -> moveSnake();
         }
     }
 
-    public void moveSnake() throws IOException {
-        if (canSnakeMove(baby.getHead()) ) {
+    public boolean moveSnake() throws IOException {
+        if (canSnakeMove(baby.getHead())) {
             baby.move();
+            retrieved = false;
+            retrieveApples();
+            if(apples.isEmpty()) createApples();
+            return true;
         }
         else {
-            boardMenu = new BoardMenu();
-            boardMenu.gameOverMenu(points);
+            retrieved = false;
+            retrieveApples();
+            if(apples.isEmpty()) createApples();
+            return false;
         }
-        retrieved = false;
-        retrieveApples();
-        if(apples.isEmpty()) createApples();
     }
 
     private boolean canSnakeMove(Position position) {
         for (Wall wall : walls) {
-            if (wall.getPosition().equals(position))
+            if (wall.getPosition().equals(baby.getHead()))
                 return false;
         }
         if (position.getX() <= 0 || position.getX() >= width)
@@ -84,13 +88,13 @@ public class Board extends JFrame {
         else return position.getY() > 0 || position.getY() < height;
     }
 
-    private List<Apple> createApples() {
+    public List<Apple> createApples() {
         Random random = new Random();
         apples.add(new Apple(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
         return apples;
     }
 
-    private void retrieveApples() {
+    public void retrieveApples() {
         for(Apple apple : apples)
             if(apple.getPosition().equals(baby.getHead())) {
                 apples.remove(apple);
@@ -104,7 +108,7 @@ public class Board extends JFrame {
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
         graphics.setForegroundColor(TextColor.Factory.fromString("#45733C"));
-        drawSnake(graphics);
+        baby.drawSnake(graphics);
 
         for (Wall wall : walls) {
             wall.draw(graphics);
@@ -113,16 +117,18 @@ public class Board extends JFrame {
             apple.draw(graphics);
     }
 
-    public void drawSnake(TextGraphics graphics) {
-        Position head = baby.getHead();
+    // GETTERS
+    public int getSpeed() {
+        return speed;
+    }
 
-        for(Position pos : baby.getBody()) {
-            if(!pos.equals(head)) {
-                graphics.putString(pos.getX(), pos.getY(), "o");
-            }
-            else {
-                graphics.putString(pos.getX(), pos.getY(), "*");
-            }
-        }
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
     }
 }

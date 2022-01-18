@@ -169,7 +169,6 @@ public class Menu {
                 settings = false;
                 run();
             }
-
             default -> System.out.println("Unknown error");
         }
     }

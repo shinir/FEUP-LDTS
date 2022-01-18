@@ -67,7 +67,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\Snake-1.0-SNAPSHOT.jar;%APP_HOME%\lib\lanterna-3.1.1.jar
+set CLASSPATH=%APP_HOME%\lib\Snake-1.0-SNAPSHOT.jar;%APP_HOME%\lib\javax.servlet-api-4.0.1.jar;%APP_HOME%\lib\lanterna-3.1.1.jar;%APP_HOME%\lib\emoji-java-5.1.1.jar;%APP_HOME%\lib\json-20170516.jar
 
 
 @rem Execute Snake

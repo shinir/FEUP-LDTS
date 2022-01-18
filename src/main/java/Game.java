@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class Game {
     Screen screen;
-    TextGraphics graphics;
     Board board;
+    TextGraphics graphics;
     int speed;
 
     public Game(Screen screen, int speed) {
@@ -39,8 +39,14 @@ public class Game {
         while(board.available) {
             draw();
             processKey(screen.readInput());
-            board.moveSnake();
+            if (!board.moveSnake()) break;
         }
+        gameOver();
         screen.close();
+    }
+
+    private void gameOver() throws IOException {
+        board.boardMenu = new BoardMenu();
+        board.boardMenu.gameOverMenu(board.points);
     }
 }

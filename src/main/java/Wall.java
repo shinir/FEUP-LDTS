@@ -7,7 +7,7 @@ public class Wall extends Base {
         super(x, y);
     }
 
-    public void draw(TextGraphics graphics) {
+    public void draw (TextGraphics graphics) {
         graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('#')[0]);
     }
 }

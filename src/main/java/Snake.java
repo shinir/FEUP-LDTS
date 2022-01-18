@@ -1,3 +1,5 @@
+import com.googlecode.lanterna.graphics.TextGraphics;
+
 import java.util.LinkedList;
 
 public class Snake {
@@ -23,6 +25,20 @@ public class Snake {
         }
         way = start;
         status = true;
+    }
+
+    // function to draw the snake
+    public void drawSnake(TextGraphics graphics) {
+        Position head = getHead();
+
+        for(Position pos : getBody()) {
+            if(!pos.equals(head)) {
+                graphics.putString(pos.getX(), pos.getY(), "o");
+            }
+            else {
+                graphics.putString(pos.getX(), pos.getY(), "*");
+            }
+        }
     }
 
     // function to move the snake
@@ -54,8 +70,6 @@ public class Snake {
     }
 
     public Position moveRight() { return new Position(getHead().getX() + speed, getHead().getY()); }
-
-
 
     // everytime the snake eats an apple it should increase size
     public void increase() {

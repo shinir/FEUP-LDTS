@@ -4,15 +4,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PositionTest {
-    Position here;
+    Position here, there;
 
     @BeforeEach
-    public void creatPosition() { here = new Position(0,0); }
+    public void creatPosition() {
+        here = new Position(0,0);
+        there = new Position(1,0);
+    }
 
     @Test
-    public void xGet() {
-        assertEquals(0, here.getX());
-    }
+    public void xGet() { assertEquals(0, here.getX()); }
 
     @Test
     public void yGet() {

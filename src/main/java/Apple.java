@@ -2,6 +2,8 @@ import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
+import java.util.List;
+
 public class Apple extends Base{
     public Apple(int i, int j) { super(i,j); }
 
