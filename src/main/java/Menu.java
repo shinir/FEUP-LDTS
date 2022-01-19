@@ -8,6 +8,7 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
+import javax.sound.sampled.*;
 import java.io.*;
 
 public class Menu {
@@ -19,6 +20,7 @@ public class Menu {
     Options options;
     private boolean val, settings;
     int speed = 1;
+    SoundEffect sound;
 
     public Menu(int width, int height) {
         this.width = width;
@@ -41,14 +43,17 @@ public class Menu {
             e.printStackTrace();
         }
         new Board(width, height, speed);
+        this.sound = new SoundEffect();
     }
 
     public void run() throws IOException {
+
         while (!val) {
             screen.clear();
             printMenu();
             screen.refresh();
             int choice = getInput();
+            sound.inputSound("mixkit-unlock-game-notification-253.wav");
             doInput(choice);
         }
     }
@@ -145,7 +150,10 @@ public class Menu {
             pos += 1;
             screen.refresh();
             KeyStroke key = screen.readInput();
-            if (key.getKeyType() == KeyType.Enter) run();
+            if (key.getKeyType() == KeyType.Enter) {
+                sound.inputSound("mixkit-quick-lock-sound-2854.wav");
+                run();
+            }
             else if (key.getKeyType() == KeyType.Escape) System.exit(0);
             else textGraphics.putString(0, pos, "Input invalid. Please try again.");
             pos += 1;
@@ -175,14 +183,17 @@ public class Menu {
         switch (key.getKeyType()) {
             case ArrowRight : {
                 speed++;
+                sound.inputSound("mixkit-unlock-game-notification-253.wav");
                 break;
             }
             case ArrowLeft : {
                 speed--;
+                sound.inputSound("mixkit-unlock-game-notification-253.wav");
                 break;
             }
             case Escape : {
                 settings = false;
+                sound.inputSound("mixkit-quick-lock-sound-2854.wav");
                 break;
             }
             default : {

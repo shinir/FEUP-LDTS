@@ -14,6 +14,7 @@ import java.io.IOException;
 public class BoardMenu {
     Screen screen;
     TextGraphics textGraphics;
+    SoundEffect sound = new SoundEffect();
 
     public BoardMenu() {
         try {
@@ -37,6 +38,7 @@ public class BoardMenu {
 
     private void printMenu() throws IOException {
         screen.clear();
+        sound.inputSound("mixkit-unlock-game-notification-253.wav");
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
         textGraphics.putString(1, 1, "Are you sure you wanna exit your game?");
         textGraphics.putString(17, 3, "Yes");

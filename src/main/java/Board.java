@@ -23,6 +23,7 @@ public class Board extends JFrame {
     public boolean available = true;
     public int size;
     public boolean retrieved = false;
+    SoundEffect sound = new SoundEffect();
 
 
     public Board(int width, int height, int speed) {
@@ -77,7 +78,7 @@ public class Board extends JFrame {
         }
     }
 
-    public boolean moveSnake() throws IOException {
+    public boolean moveSnake() {
         if (canSnakeMove(baby.getHead())) {
             for (int i = 1; i <= speed; i++) {
                 baby.move();
@@ -88,6 +89,7 @@ public class Board extends JFrame {
             return true;
         }
         else {
+            sound.inputSound("mixkit-retro-arcade-game-over-470.wav");
             retrieved = false;
             retrieveApples();
             if(apples.isEmpty()) createApples();
@@ -122,6 +124,7 @@ public class Board extends JFrame {
                 baby.increase();
                 points++;
                 retrieved = true;
+                sound.inputSound("The_Office_US_Kevin_is_Cookie_Monster_Trim (online-audio-converter.com).wav");
                 break;
             }
     }
