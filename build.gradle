@@ -5,10 +5,18 @@ plugins {
 }
 
 application {
-    mainClass.set("Application")
+    mainClass.set("snake.Application")
 }
 
-group 'org.example'
+pitest {
+    targetClasses = ['test.java.snake.*']  //by default "${project.group}.*"
+    pitestVersion = '1.7.0' //not needed when a default PIT version should be used
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+}
+
+group 'java.snake'
 version '1.0-SNAPSHOT'
 
 repositories {
