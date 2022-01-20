@@ -3,14 +3,16 @@ package snake;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
-import snake.Apple;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.swing.*;
 
+/**
+ * Represents the board where the user plays
+ */
 public class Board extends JFrame {
     // SIZE OF THE BOARD
     private final int width;
@@ -28,7 +30,12 @@ public class Board extends JFrame {
     public boolean retrieved = false;
     SoundEffect sound = new SoundEffect();
 
-
+    /**
+     * Constructor of the class
+     * @param width Size in the X axis
+     * @param height Size in the Y axis
+     * @param speed Speed the snake moves
+     */
     public Board(int width, int height, int speed) {
         this.width = width;
         this.height = height;
@@ -39,6 +46,10 @@ public class Board extends JFrame {
         this.size = 3;
     }
 
+    /**
+     * Creates wall around the board
+     * @return List with all walls
+     */
     public List<Wall> createWalls() {
         walls = new ArrayList<>();
         for (int c = 0; c < width; c++) {
@@ -52,6 +63,10 @@ public class Board extends JFrame {
         return walls;
     }
 
+    /**
+     * Makes the snake move based on the input
+     * @param key User's input
+     */
     public void processKey(KeyStroke key) throws IOException {
         switch (key.getKeyType()) {
             case ArrowUp : {
@@ -81,6 +96,10 @@ public class Board extends JFrame {
         }
     }
 
+    /**
+     * Moves the snake, and, if possible, plays sound
+     * @return Boolean dependant on whether it's possible to move to the position in question
+     */
     public boolean moveSnake() {
         if (canSnakeMove(baby.getHead())) {
             for (int i = 1; i <= speed; i++) {
@@ -100,6 +119,11 @@ public class Board extends JFrame {
         }
     }
 
+    /**
+     * Verifies if it's possible to move the snake to the wanted position
+     * @param position Where the snake is going to
+     * @return Boolean dependant on whether it's possible to move to the position in question
+     */
     private boolean canSnakeMove(Position position) {
 
         for(int i = 0; i < baby.getBody().size() - 1; i++)
@@ -114,12 +138,19 @@ public class Board extends JFrame {
         else return position.getY() > 0 || position.getY() < height;
     }
 
+    /**
+     * Places apple on board
+     * @return List with all apples
+     */
     public List<Apple> createApples() {
         Random random = new Random();
         apples.add(new Apple(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
         return apples;
     }
 
+    /**
+     * Checks if snake eats apple and, if so, removes it from board and plays sound
+     */
     public void retrieveApples() {
         for(Apple apple : apples)
             if(apple.getPosition().equals(baby.getHead())) {
@@ -132,6 +163,9 @@ public class Board extends JFrame {
             }
     }
 
+    /**
+     * Draws board
+     */
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
         graphics.setForegroundColor(TextColor.Factory.fromString("#45733C"));
@@ -144,16 +178,27 @@ public class Board extends JFrame {
             apple.draw(graphics);
     }
 
-    // GETTERS
+    /**
+     * Getter for speed
+     * @return Speed
+     */
     public int getSpeed() {
         return speed;
     }
 
+    /**
+     * Getter for width, overriden from JFrame
+     * @return Width
+     */
     @Override
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Getter for height, overriden from JFrame
+     * @return Height
+     */
     @Override
     public int getHeight() {
         return height;

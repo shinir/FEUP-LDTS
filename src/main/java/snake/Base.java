@@ -2,6 +2,9 @@ package snake;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 
+/**
+ * Superclass of Apple and Wall
+ */
 abstract class Base {
     protected Position position;
 

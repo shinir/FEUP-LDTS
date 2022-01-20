@@ -13,11 +13,18 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 
+/**
+ * Menus that are accessed while playing the game
+ */
 public class BoardMenu {
+
     Screen screen;
     TextGraphics textGraphics;
     SoundEffect sound = new SoundEffect();
 
+    /**
+     * Constructor of the class
+     */
     public BoardMenu() {
         try {
             // configuring the terminal
@@ -38,6 +45,9 @@ public class BoardMenu {
         }
     }
 
+    /**
+     * Draws pause menu
+     */
     private void printMenu() throws IOException {
         screen.clear();
         sound.inputSound("mixkit-unlock-game-notification-253.wav");
@@ -51,6 +61,10 @@ public class BoardMenu {
         screen.refresh();
     }
 
+    /**
+     * Processes user's input
+     * @param key User's input
+     */
     private void doInput(KeyStroke key) throws IOException {
         switch (key.getCharacter()) {
             case 'y' : {
@@ -68,6 +82,9 @@ public class BoardMenu {
         }
     }
 
+    /**
+     * Initializes class
+     */
     public void run() throws IOException{
         screen.clear();
         printMenu();
@@ -76,6 +93,10 @@ public class BoardMenu {
         screen.refresh();
     }
 
+    /**
+     * Draws game over menu when snake dies
+     * @param points
+     */
     public void gameOverMenu(int points) throws IOException {
         screen.clear();
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#008000"));
@@ -88,6 +109,10 @@ public class BoardMenu {
         screen.refresh();
     }
 
+    /**
+     * Exits game after dying
+     * @param key User's input
+     */
     private void doInputOver(KeyStroke key) {
         if (key.getKeyType() == KeyType.Escape) System.exit(0);
     }

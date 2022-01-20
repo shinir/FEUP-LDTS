@@ -1,11 +1,12 @@
 package snake;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import snake.Direction;
-import snake.Position;
 
 import java.util.LinkedList;
 
+/**
+ * Snake controlled by the user
+ */
 public class Snake {
     // SIZE OF THE SNAKE
     public int size = 3;
@@ -18,7 +19,10 @@ public class Snake {
     // IF TRUE IS ALIVE, ELSE IS DEAD
     public boolean status;
 
-    // CONSTRUCTOR
+    /**
+     * constructor of the class
+     * @param start Direction to where the snake is moving
+     */
     public Snake(Direction start) {
         body = new LinkedList<>();
 
@@ -29,7 +33,9 @@ public class Snake {
         status = true;
     }
 
-    // function to draw the snake
+    /**
+     * Draws snake into the board
+     */
     public void drawSnake(TextGraphics graphics) {
         Position head = getHead();
 
@@ -43,7 +49,9 @@ public class Snake {
         }
     }
 
-    // function to move the snake
+    /**
+     * Moves snake to direction currently selected
+     */
     public void move() {
         getHead();
         Position head;
@@ -73,49 +81,68 @@ public class Snake {
         body.addLast(head);
     }
 
+    /**
+     * Moves snake downwards
+     * @return Current position of snake's head
+     */
     public Position moveDown() {
         return new Position(getHead().getX(), getHead().getY() + 1);
     }
-
+    /**
+     * Moves snake upwards
+     * @return Current position of snake's head
+     */
     public Position moveUp() {
         return new Position(getHead().getX(), getHead().getY() - 1);
     }
-
+    /**
+     * Moves snake to the left
+     * @return Current position of snake's head
+     */
     public Position moveLeft() {
         return new Position(getHead().getX() - 1, getHead().getY());
     }
-
+    /**
+     * Moves snake to the right
+     * @return Current position of snake's head
+     */
     public Position moveRight() { return new Position(getHead().getX() + 1, getHead().getY()); }
 
-    // everytime the snake eats an apple it should increase size
+    /**
+     * Increases snake's size when it eats an apple
+     */
     public void increase() {
         size++;
         Position tail = getTail();
         body.addFirst(new Position(tail.getX(), tail.getY()));
     }
 
-    // returns the linked list containing all positions of the body
+    /**
+     * Getter for linked list with snake's body
+     * @return Linked list containing all positions of the body
+     */
     public LinkedList<Position> getBody() {
         return body;
     }
-
-    // return the last element on the list
+    /**
+     * Getter for snake's head
+     * @return Position of snake's head
+     */
     public Position getHead() {
         return body.getLast();
     }
-
-    // return the first element on the list
+    /**
+     * Getter for snake's tail
+     * @return Position of snake's tail
+     */
     public Position getTail() {
         return body.getFirst();
     }
 
-    // everytime the direction changes we have to set a new direction
+    /**
+     * Setter for direction of snake's movement
+     */
     public void setDirection(Direction direction) {
         this.way = direction;
-    }
-
-    // returns the direction that the snake is currently following
-    public Direction getDirection() {
-        return way;
     }
 }

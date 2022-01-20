@@ -9,12 +9,12 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import snake.Board;
-import snake.Options;
 
-import javax.sound.sampled.*;
 import java.io.*;
 
+/**
+ * Game's main menu
+ */
 public class Menu {
     // SIZE OF THE MENU
     public int width;
@@ -22,11 +22,15 @@ public class Menu {
 
     private Screen screen;
     TextGraphics textGraphics;
-    Options options;
     private boolean val, settings;
     int speed = 1;
     SoundEffect sound;
 
+    /**
+     * Constructor of the class
+     * @param width Size of menu on the X axis
+     * @param height Size of menu on the Y axis
+     */
     public Menu(int width, int height) {
         this.width = width;
         this.height = height;
@@ -51,6 +55,10 @@ public class Menu {
         this.sound = new SoundEffect();
     }
 
+    /**
+     * Initializes menu
+     * @throws IOException
+     */
     public void run() throws IOException {
 
         while (!val) {
@@ -63,6 +71,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Prints menu to frame
+     */
     private void printMenu() {
         screen.clear();
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#bf0f0f"));
@@ -79,6 +90,10 @@ public class Menu {
         textGraphics.drawLine(width, 0, width, height, ' ');
     }
 
+    /**
+     * Receives a valid input from user
+     * @return User's input
+     */
     private char getInput() {
         int pos = 14;
         while (true) {
@@ -101,6 +116,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Processes user's input
+     * @param choice User's input
+     * @throws IOException
+     */
     private void doInput(int choice) throws IOException {
         switch (choice) {
             case '1' : {
@@ -131,6 +151,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Prints Instructions.txt content to frame
+     */
     private void printInstructions() throws IOException {
         int pos = 0;
 
@@ -165,6 +188,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Draws settings submenu
+     */
     private void printSettings() throws IOException {
         settings = true;
         screen.clear();
@@ -184,6 +210,10 @@ public class Menu {
         run();
     }
 
+    /**
+     * Receives user's input while on settings' submenu
+     * @param key
+     */
     private void inputSettings(KeyStroke key) {
         switch (key.getKeyType()) {
             case ArrowRight : {
