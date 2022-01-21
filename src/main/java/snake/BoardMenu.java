@@ -103,7 +103,7 @@ public class BoardMenu {
         textGraphics.putString(10, 1, "snake.Game Over");
         textGraphics.putString(1, 3, "Points: " + points);
         textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(40, 10), '*');
-        textGraphics.putString(1, 5, "Press Esc to exit.");
+        textGraphics.putString(1, 5, "Press any key to exit.");
         screen.refresh();
         doInputOver(screen.readInput());
         screen.refresh();
@@ -114,6 +114,6 @@ public class BoardMenu {
      * @param key User's input
      */
     private void doInputOver(KeyStroke key) {
-        if (key.getKeyType() == KeyType.Escape) System.exit(0);
+        if (key.getKeyType() == KeyType.Escape || key.getKeyType() == KeyType.ArrowUp || key.getKeyType() == KeyType.ArrowDown || key.getKeyType() == KeyType.ArrowLeft || key.getKeyType() == KeyType.ArrowRight) System.exit(0);
     }
 }

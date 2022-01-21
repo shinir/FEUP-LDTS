@@ -68,11 +68,9 @@ public class Board extends JFrame {
      * @param key User's input
      */
     public void processKey(KeyStroke key) throws IOException {
-        //while (!sht) {
             switch (key.getKeyType()) {
                 case ArrowUp: {
                     baby.setDirection(Direction.UP);
-                    //sht = true;
                     break;
                 }
                 case ArrowDown: {
@@ -109,7 +107,7 @@ public class Board extends JFrame {
                 baby.move();
                 retrieved = false;
                 retrieveApples();
-                if (apples.isEmpty()) createApples();
+                while (apples.size() < 3) createApples();
             }
             return true;
         }
