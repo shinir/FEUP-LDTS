@@ -68,29 +68,32 @@ public class Board extends JFrame {
      * @param key User's input
      */
     public void processKey(KeyStroke key) throws IOException {
-        switch (key.getKeyType()) {
-            case ArrowUp : {
-                baby.setDirection(Direction.UP);
-                break;
-            }
-            case ArrowDown : {
-                baby.setDirection(Direction.DOWN);
-                break;
-            }
-            case ArrowLeft : {
-                baby.setDirection(Direction.LEFT);
-            }
-            case ArrowRight : {
-                baby.setDirection(Direction.RIGHT);
-                break;
-            }
-            case Escape : {
-                boardMenu = new BoardMenu();
-                boardMenu.run();
-                break;
-            }
+        //while (!sht) {
+            switch (key.getKeyType()) {
+                case ArrowUp: {
+                    baby.setDirection(Direction.UP);
+                    //sht = true;
+                    break;
+                }
+                case ArrowDown: {
+                    baby.setDirection(Direction.DOWN);
+                    break;
+                }
+                case ArrowLeft: {
+                    baby.setDirection(Direction.LEFT);
+                    break;
+                }
+                case ArrowRight: {
+                    baby.setDirection(Direction.RIGHT);
+                    break;
+                }
+                case Escape: {
+                    boardMenu = new BoardMenu();
+                    boardMenu.run();
+                    break;
+                }
             default : {
-                moveSnake();
+                System.out.println("Invalid input");
                 break;
             }
         }

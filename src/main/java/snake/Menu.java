@@ -57,7 +57,6 @@ public class Menu {
 
     /**
      * Initializes menu
-     * @throws IOException
      */
     public void run() throws IOException {
 
@@ -119,7 +118,6 @@ public class Menu {
     /**
      * Processes user's input
      * @param choice User's input
-     * @throws IOException
      */
     private void doInput(int choice) throws IOException {
         switch (choice) {
@@ -212,7 +210,7 @@ public class Menu {
 
     /**
      * Receives user's input while on settings' submenu
-     * @param key
+     * @param key User's input
      */
     private void inputSettings(KeyStroke key) {
         switch (key.getKeyType()) {

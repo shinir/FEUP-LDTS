@@ -95,7 +95,7 @@ public class BoardMenu {
 
     /**
      * Draws game over menu when snake dies
-     * @param points
+     * @param points Number of apples the snake ate
      */
     public void gameOverMenu(int points) throws IOException {
         screen.clear();
