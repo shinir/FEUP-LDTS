@@ -142,7 +142,5 @@ public class Snake {
     /**
      * Setter for direction of snake's movement
      */
-    public void setDirection(Direction direction) {
-        this.way = direction;
-    }
+    public void setDirection(Direction direction) { this.way = direction; }
 }

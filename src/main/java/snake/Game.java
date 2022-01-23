@@ -1,7 +1,6 @@
 package snake;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 
 import java.io.IOException;
@@ -36,14 +35,6 @@ public class Game {
     }
 
     /**
-     * Receives user's input and makes the board process it
-     * @param key User's input
-     */
-    private void processKey(KeyStroke key) throws IOException {
-        board.processKey(key);
-    }
-
-    /**
      * Updates board screen
      */
     public void draw() throws IOException {
@@ -58,7 +49,6 @@ public class Game {
     public void run() throws IOException {
         while(board.available) {
             draw();
-            //processKey(screen.readInput());
             if (!board.moveSnake()) break;
         }
         gameOver();

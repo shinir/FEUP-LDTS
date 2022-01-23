@@ -37,7 +37,7 @@ public class Menu {
         this.height = height;
         try {
             // configuring the terminal
-            TerminalSize terminalSize = new TerminalSize(40, 20);
+            TerminalSize terminalSize = new TerminalSize(width, height);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
 
@@ -78,7 +78,7 @@ public class Menu {
         screen.clear();
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#bf0f0f"));
         textGraphics.putString(15, 1, "S N A K E");
-        textGraphics.putString(10, 4, "Play snake.Game");
+        textGraphics.putString(10, 4, "Play Game");
         textGraphics.putString(10, 6, "Instructions");
         textGraphics.putString(10,8, "Settings");
         textGraphics.putString(10, 10, "Exit");
@@ -86,7 +86,6 @@ public class Menu {
         textGraphics.putString(25, 6, "2");
         textGraphics.putString(25, 8, "3");
         textGraphics.putString(25, 10, "0");
-        //textGraphics.TextColor.Factory.fromString(String.valueOf(Color.red);
         textGraphics.drawLine(width, 0, width, height, ' ');
     }
 
@@ -204,6 +203,7 @@ public class Menu {
             textGraphics.putString(1, 9, "                        ");
             KeyStroke key = screen.readInput();
             inputSettings(key);
+            doSpeed();
             textGraphics.putString(11, 7, String.valueOf(showSpeed));
             screen.refresh();
         }
@@ -220,14 +220,12 @@ public class Menu {
                 sound.inputSound("mixkit-unlock-game-notification-253.wav");
                 if (checkSpeed(1)) break;
                 showSpeed++;
-                speed -= 100;
                 break;
             }
             case ArrowLeft : {
                 sound.inputSound("mixkit-unlock-game-notification-253.wav");
                 if (checkSpeed(-1)) break;
                 showSpeed--;
-                speed += 100;
                 break;
             }
             case Escape : {
@@ -252,10 +250,18 @@ public class Menu {
             textGraphics.putString(1, 9, "Minimum speed reached");
             return true;
         }
-        if (showSpeed + i >= 10) {
+        if (showSpeed + i >= 6) {
             textGraphics.putString(1, 9, "Maximum speed reached");
             return true;
         }
         return false;
+    }
+
+    private void doSpeed() {
+        if (showSpeed == 5) speed = 40;
+        if (showSpeed == 4) speed = 60;
+        if (showSpeed == 3) speed = 80;
+        if (showSpeed == 2) speed = 100;
+        if (showSpeed == 1) speed = 120;
     }
 }

@@ -2,9 +2,10 @@ package snake;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Random;
 /**
  * Represents the board where the user plays
  */
-public class Board extends JFrame {
+public class Board extends JFrame implements KeyListener {
     // SIZE OF THE BOARD
     private final int width;
     private final int height;
@@ -44,6 +45,9 @@ public class Board extends JFrame {
         this.speed = speed;
         baby = new Snake(Direction.UP);
         this.size = 3;
+        this.addKeyListener(this);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     /**
@@ -64,46 +68,12 @@ public class Board extends JFrame {
     }
 
     /**
-     * Makes the snake move based on the input
-     * @param key User's input
-     */
-    public void processKey(KeyStroke key) throws IOException {
-            switch (key.getKeyType()) {
-                case ArrowUp: {
-                    baby.setDirection(Direction.UP);
-                    break;
-                }
-                case ArrowDown: {
-                    baby.setDirection(Direction.DOWN);
-                    break;
-                }
-                case ArrowLeft: {
-                    baby.setDirection(Direction.LEFT);
-                    break;
-                }
-                case ArrowRight: {
-                    baby.setDirection(Direction.RIGHT);
-                    break;
-                }
-                case Escape: {
-                    boardMenu = new BoardMenu();
-                    boardMenu.run();
-                    break;
-                }
-            default : {
-                System.out.println("Invalid input");
-                break;
-            }
-        }
-    }
-
-    /**
      * Moves the snake, and, if possible, plays sound
      * @return Boolean dependant on whether it's possible to move to the position in question
      */
     public boolean moveSnake() {
         try {
-            Thread.sleep(speed);
+            Thread.sleep(40);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -173,6 +143,7 @@ public class Board extends JFrame {
      * Draws board
      */
     public void draw(TextGraphics graphics) {
+        setVisible(true);
         graphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
         graphics.setForegroundColor(TextColor.Factory.fromString("#45733C"));
         baby.drawSnake(graphics);
@@ -209,4 +180,45 @@ public class Board extends JFrame {
     public int getHeight() {
         return height;
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    /**
+     * Makes the snake hange direction based on the input
+     * @param e User input
+     */
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP: {
+                baby.setDirection(Direction.UP);
+                break;
+            }
+            case KeyEvent.VK_DOWN: {
+                baby.setDirection(Direction.DOWN);
+                break;
+            }
+            case KeyEvent.VK_LEFT: {
+                baby.setDirection(Direction.LEFT);
+                break;
+            }
+            case KeyEvent.VK_RIGHT: {
+                baby.setDirection(Direction.RIGHT);
+                break;
+            }
+            case KeyEvent.VK_ESCAPE: {
+                boardMenu = new BoardMenu();
+                try {
+                    boardMenu.run();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }
