@@ -23,7 +23,8 @@ public class Menu {
     private Screen screen;
     TextGraphics textGraphics;
     private boolean val, settings;
-    int speed = 1;
+    int speed = 500;
+    int showSpeed = 3;
     SoundEffect sound;
 
     /**
@@ -196,13 +197,14 @@ public class Menu {
         textGraphics.putString(3, 5, "< Increase Speed >");
         textGraphics.putString(1, 12, "Press Esc to return");
         textGraphics.drawLine(width, 0, width, height, ' ');
-        textGraphics.putString(11, 7, String.valueOf(speed));
+        textGraphics.putString(11, 7, String.valueOf(showSpeed));
         screen.refresh();
 
         while (settings) {
+            textGraphics.putString(1, 9, "                        ");
             KeyStroke key = screen.readInput();
             inputSettings(key);
-            textGraphics.putString(11, 7, String.valueOf(speed));
+            textGraphics.putString(11, 7, String.valueOf(showSpeed));
             screen.refresh();
         }
         run();
@@ -215,13 +217,17 @@ public class Menu {
     private void inputSettings(KeyStroke key) {
         switch (key.getKeyType()) {
             case ArrowRight : {
-                speed++;
                 sound.inputSound("mixkit-unlock-game-notification-253.wav");
+                if (checkSpeed(1)) break;
+                showSpeed++;
+                speed -= 100;
                 break;
             }
             case ArrowLeft : {
-                speed--;
                 sound.inputSound("mixkit-unlock-game-notification-253.wav");
+                if (checkSpeed(-1)) break;
+                showSpeed--;
+                speed += 100;
                 break;
             }
             case Escape : {
@@ -234,5 +240,22 @@ public class Menu {
                 break;
             }
         }
+    }
+
+    /**
+     * Checks if speed selected is valid
+     * @param i Integer that added to current velocity determines inputted speed
+     * @return Boolean dependent on whether max/min speed was reached
+     */
+    private boolean checkSpeed(int i) {
+        if (showSpeed + i <= 0) {
+            textGraphics.putString(1, 9, "Minimum speed reached");
+            return true;
+        }
+        if (showSpeed + i >= 10) {
+            textGraphics.putString(1, 9, "Maximum speed reached");
+            return true;
+        }
+        return false;
     }
 }

@@ -53,12 +53,12 @@ public class Game {
     }
 
     /**
-     * Initializes the game itself and also closes it
+     * Initializes the game itself, makes snake move and also closes it
      */
     public void run() throws IOException {
         while(board.available) {
             draw();
-            processKey(screen.readInput());
+            //processKey(screen.readInput());
             if (!board.moveSnake()) break;
         }
         gameOver();

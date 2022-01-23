@@ -102,13 +102,16 @@ public class Board extends JFrame {
      * @return Boolean dependant on whether it's possible to move to the position in question
      */
     public boolean moveSnake() {
+        try {
+            Thread.sleep(speed);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (canSnakeMove(baby.getHead())) {
-            for (int i = 1; i <= speed; i++) {
-                baby.move();
-                retrieved = false;
-                retrieveApples();
-                while (apples.size() < 3) createApples();
-            }
+            baby.move();
+            retrieved = false;
+            retrieveApples();
+            createApples();
             return true;
         }
         else {
@@ -144,8 +147,10 @@ public class Board extends JFrame {
      * @return List with all apples
      */
     public List<Apple> createApples() {
-        Random random = new Random();
-        apples.add(new Apple(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        while (apples.size() < 3) {
+            Random random = new Random();
+            apples.add(new Apple(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        }
         return apples;
     }
 
