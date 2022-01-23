@@ -14,7 +14,6 @@ public class BoardTest {
     Snake baby;
     List<Wall> walls;
     List<Apple> juice;
-    KeyStroke key;
     int width = 40, height = 20, speed = 0;
 
     @BeforeEach
@@ -50,11 +49,5 @@ public class BoardTest {
         assert(juice != null);
         //assert(baby.getHead().equals(juice.getFirst()));
 
-    }
-
-    @Test
-    public void processKeyTest() {
-        // ???
-        //assertEquals(test.processKey(key.getKeyType() == ArrowUp), baby.setDirection(snake.Direction.UP));
     }
 }

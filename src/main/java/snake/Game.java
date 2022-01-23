@@ -45,7 +45,6 @@ public class Game {
 
     /**
      * Updates board screen
-     * @throws IOException
      */
     public void draw() throws IOException {
         screen.clear();
