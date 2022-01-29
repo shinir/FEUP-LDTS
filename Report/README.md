@@ -7,6 +7,12 @@ To increase difficulty, different speeds are available.
 
 This project was developed by Afonso Pinto (up202008014@up.pt) and Raquel Carneiro (up202005330@up.pt) for LDTS 2021/2022.
 
+###Implemented Features
+#### Snake
++ Follows the same direction when no key is pressed, that means that it can crawl by itself;
++ Grows in size by eating apples;
++ Dies if it touches a wall or if it touches itself.
+
 ## Gameplay DEMO
 ![Gameplay from Snake](shortVideos/Gameplay.gif "Gameplay")
 
@@ -34,10 +40,10 @@ In your settings, you can customize the speed of your snake. You have 5 speeds a
 
 ###Planned Features
 #### Snake
-+ Follows the same direction when no key is pressed, that means that it can crawl by itself;
-+ Grows in size by eating apples;
-+ Dies if it touches a wall or if it touches itself.
++ Create monster that would go to random positions and, if they touch the snake, kill it.
 
+###Design
+![UML Diagram](prints/uml.png "UML")
 
 ## Code Smells and Possible Refactorings
 We tried to refactor our code in a way that it could be more simple for others to understand it, without having to spending hours trying to understand the code.
@@ -53,6 +59,6 @@ In the method gameOver from Game, there are some exhausting chains, that made it
 The class Board treats a lot of content related to others than of itself. Some of those methods are about apples and walls, it would be more simple if they could handle their business, such as creating, for themselves.
 
 ## Self-evaluation
-+ Afonso Pinto:
-+ Raquel Carneiro:
++ Afonso Pinto: 50%
++ Raquel Carneiro: 50%
 

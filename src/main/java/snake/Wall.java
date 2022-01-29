@@ -21,6 +21,6 @@ public class Wall extends Base {
      * Draws wall in specific position of board
      */
     public void draw (TextGraphics graphics) {
-        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('▒')[0]);
+        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('#')[0]);
     }
 }
