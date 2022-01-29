@@ -20,7 +20,7 @@ public class Menu {
     public int height;
     private Screen screen;
     public TextGraphics textGraphics;
-    private boolean val, settings;
+    private boolean available = true, settings;
     public Speed speed = new Speed(100,3);
     public SoundEffect sound;
 
@@ -54,8 +54,7 @@ public class Menu {
      * Initializes menu
      */
     public void runMenu() throws IOException {
-
-        while (!val) {
+        while (available) {
             screen.clear();
             printMenu();
             screen.refresh();
@@ -123,16 +122,16 @@ public class Menu {
             }
             case '2' : {
                 printInstructions();
-                val = true;
+                available = false;
                 break;
             }
             case '3' : {
                 printSettings();
-                val = true;
+                available = false;
                 break;
             }
             case '0' : {
-                val = true;
+                available = false;
                 System.exit(0);
                 break;
             }

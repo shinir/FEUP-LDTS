@@ -23,12 +23,9 @@ public class Game {
         try {
             this.screen = screen;
             this.speed = speed;
-            // configuring the screen
             screen.refresh();
-
             graphics = screen.newTextGraphics();
             board = new Board(40,20, speed);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
