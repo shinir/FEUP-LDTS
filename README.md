@@ -7,7 +7,7 @@ We made a classic snake game where you're able to grow your own snake. Your snak
 ## Screenshots
 
 ### snake.Menu:
-![Main Menu from Snake](Report/prints/Main Menu.png "Main Menu")
+![Main Menu from Snake](Report/prints/MainMenu.png "Main Menu")
 
 ### snake.Instructions:
 ![Instructions for Snake](Report/prints/Instructions.png "Instructions")
@@ -19,7 +19,7 @@ We made a classic snake game where you're able to grow your own snake. Your snak
 ![Gameplay from Snake](Report/prints/Gameplay.png "Gameplay")
 
 ### snake.PauseMenu:
-![Pause Menu from Snake](Report/prints/Pause Menu.png "Pause Menu")
+![Pause Menu from Snake](Report/prints/PauseMenu.png "Pause Menu")
 
 ### snake.GameOver:
-![Game Over from Snake](Report/prints/Game Over Menu.png "Game Over")
+![Game Over from Snake](Report/prints/GameOverMenu.png "Game Over")
