@@ -23,3 +23,10 @@ We made a classic snake game where you're able to grow your own snake. Your snak
 
 ### snake.GameOver:
 ![Game Over from Snake](Report/prints/GameOverMenu.png "Game Over")
+
+### More info:
+[**Full Report**](Report/README.md)
+
+## Trabalho realizado por
++ Afonso Pinto, 202008014
++ Raquel Carneiro, 202005330
