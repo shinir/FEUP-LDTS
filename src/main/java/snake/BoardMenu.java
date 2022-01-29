@@ -48,14 +48,13 @@ public class BoardMenu {
     /**
      * Draws pause menu
      */
-    private void printMenu() throws IOException {
+    private void printPauseMenu() throws IOException {
         screen.clear();
         sound.inputSound("mixkit-unlock-game-notification-253.wav");
         textGraphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
         textGraphics.putString(1, 1, "Are you sure you wanna exit your game?");
         textGraphics.putString(17, 3, "Yes");
         textGraphics.putString(17, 5, "No");
-        //textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(40, 10), '*');
         screen.refresh();
         doInputOver(screen.readInput());
         screen.refresh();
@@ -65,7 +64,7 @@ public class BoardMenu {
      * Processes user's input
      * @param key User's input
      */
-    private void doInput(KeyStroke key) throws IOException {
+    private void doPauseInput(KeyStroke key) throws IOException {
         switch (key.getCharacter()) {
             case 'y' : {
                 System.exit(0);
@@ -85,11 +84,11 @@ public class BoardMenu {
     /**
      * Initializes class
      */
-    public void run() throws IOException{
+    public void runBoardMenu() throws IOException{
         screen.clear();
-        printMenu();
+        printPauseMenu();
         screen.refresh();
-        doInput(screen.readInput());
+        doPauseInput(screen.readInput());
         screen.refresh();
     }
 
@@ -99,10 +98,10 @@ public class BoardMenu {
      */
     public void gameOverMenu(int points) throws IOException {
         screen.clear();
-        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#008000"));
-        textGraphics.putString(10, 1, "snake.Game Over");
+        textGraphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
+        textGraphics.putString(15, 1, "Game Over");
         textGraphics.putString(1, 3, "Points: " + points);
-        textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(40, 10), '*');
+        textGraphics.drawRectangle(new TerminalPosition(0, 0), new TerminalSize(40, 10), ' ');
         textGraphics.putString(1, 5, "Press any key to exit.");
         screen.refresh();
         doInputOver(screen.readInput());

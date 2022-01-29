@@ -20,6 +20,6 @@ public class Apple extends Base {
      */
     public void draw(TextGraphics graphics) {
         graphics.setForegroundColor(TextColor.Factory.fromString("#CA002A"));
-        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('o')[0]);
+        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('@')[0]);
     }
 }

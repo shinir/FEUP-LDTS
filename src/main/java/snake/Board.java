@@ -142,7 +142,7 @@ public class Board extends JFrame implements KeyListener {
     /**
      * Draws board
      */
-    public void draw(TextGraphics graphics) {
+    public void drawBoardGraphics(TextGraphics graphics) {
         setVisible(true);
         graphics.setBackgroundColor(TextColor.Factory.fromString("#000000"));
         graphics.setForegroundColor(TextColor.Factory.fromString("#45733C"));
@@ -210,7 +210,7 @@ public class Board extends JFrame implements KeyListener {
             case KeyEvent.VK_ESCAPE: {
                 boardMenu = new BoardMenu();
                 try {
-                    boardMenu.run();
+                    boardMenu.runBoardMenu();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

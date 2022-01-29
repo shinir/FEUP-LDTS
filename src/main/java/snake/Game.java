@@ -37,18 +37,18 @@ public class Game {
     /**
      * Updates board screen
      */
-    public void draw() throws IOException {
+    public void drawGame() throws IOException {
         screen.clear();
-        board.draw(graphics);
+        board.drawBoardGraphics(graphics);
         screen.refresh();
     }
 
     /**
      * Initializes the game itself, makes snake move and also closes it
      */
-    public void run() throws IOException {
+    public void runGame() throws IOException {
         while(board.available) {
-            draw();
+            drawGame();
             if (!board.moveSnake()) break;
         }
         gameOver();

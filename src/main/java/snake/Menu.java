@@ -16,16 +16,13 @@ import java.io.*;
  * Game's main menu
  */
 public class Menu {
-    // SIZE OF THE MENU
     public int width;
     public int height;
-
     private Screen screen;
-    TextGraphics textGraphics;
+    public TextGraphics textGraphics;
     private boolean val, settings;
-    int speed = 500;
-    int showSpeed = 3;
-    SoundEffect sound;
+    public Speed speed = new Speed(100,3);
+    public SoundEffect sound;
 
     /**
      * Constructor of the class
@@ -36,12 +33,9 @@ public class Menu {
         this.width = width;
         this.height = height;
         try {
-            // configuring the terminal
             TerminalSize terminalSize = new TerminalSize(width, height);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
             Terminal terminal = terminalFactory.createTerminal();
-
-            // configuring the screen
             screen = new TerminalScreen(terminal);
             screen.setCursorPosition(null);
             screen.startScreen();
@@ -52,14 +46,14 @@ public class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        new Board(width, height, speed);
+        new Board(width, height, speed.getSpeed());
         this.sound = new SoundEffect();
     }
 
     /**
      * Initializes menu
      */
-    public void run() throws IOException {
+    public void runMenu() throws IOException {
 
         while (!val) {
             screen.clear();
@@ -122,9 +116,9 @@ public class Menu {
     private void doInput(int choice) throws IOException {
         switch (choice) {
             case '1' : {
-                Game snake = new Game(screen, speed);
+                Game snake = new Game(screen, speed.getSpeed());
                 screen = snake.screen;
-                snake.run();
+                snake.runGame();
                 break;
             }
             case '2' : {
@@ -178,7 +172,7 @@ public class Menu {
             KeyStroke key = screen.readInput();
             if (key.getKeyType() == KeyType.Enter) {
                 sound.inputSound("mixkit-quick-lock-sound-2854.wav");
-                run();
+                runMenu();
             }
             else if (key.getKeyType() == KeyType.Escape) System.exit(0);
             else textGraphics.putString(0, pos, "Input invalid. Please try again.");
@@ -193,21 +187,21 @@ public class Menu {
         settings = true;
         screen.clear();
         textGraphics.setForegroundColor(TextColor.Factory.fromString("#bf0f0f"));
-        textGraphics.putString(3, 5, "< Increase Speed >");
-        textGraphics.putString(1, 12, "Press Esc to return");
+        textGraphics.putString(9, 5, "< Increase Speed >");
+        textGraphics.putString(9, 12, "Press Esc to return");
         textGraphics.drawLine(width, 0, width, height, ' ');
-        textGraphics.putString(11, 7, String.valueOf(showSpeed));
+        textGraphics.putString(17, 7, String.valueOf(speed.getShowSpeed()));
         screen.refresh();
 
         while (settings) {
             textGraphics.putString(1, 9, "                        ");
             KeyStroke key = screen.readInput();
             inputSettings(key);
-            doSpeed();
-            textGraphics.putString(11, 7, String.valueOf(showSpeed));
+            speed.changeSpeed();
+            textGraphics.putString(11, 7, String.valueOf(speed.getShowSpeed()));
             screen.refresh();
         }
-        run();
+        runMenu();
     }
 
     /**
@@ -218,14 +212,14 @@ public class Menu {
         switch (key.getKeyType()) {
             case ArrowRight : {
                 sound.inputSound("mixkit-unlock-game-notification-253.wav");
-                if (checkSpeed(1)) break;
-                showSpeed++;
+                if (speed.checker(1,textGraphics)) break;
+                speed.setShowSpeed(1);
                 break;
             }
             case ArrowLeft : {
                 sound.inputSound("mixkit-unlock-game-notification-253.wav");
-                if (checkSpeed(-1)) break;
-                showSpeed--;
+                if (speed.checker(-1,textGraphics)) break;
+                speed.setShowSpeed(-1);
                 break;
             }
             case Escape : {
@@ -238,30 +232,5 @@ public class Menu {
                 break;
             }
         }
-    }
-
-    /**
-     * Checks if speed selected is valid
-     * @param i Integer that added to current velocity determines inputted speed
-     * @return Boolean dependent on whether max/min speed was reached
-     */
-    private boolean checkSpeed(int i) {
-        if (showSpeed + i <= 0) {
-            textGraphics.putString(1, 9, "Minimum speed reached");
-            return true;
-        }
-        if (showSpeed + i >= 6) {
-            textGraphics.putString(1, 9, "Maximum speed reached");
-            return true;
-        }
-        return false;
-    }
-
-    private void doSpeed() {
-        if (showSpeed == 5) speed = 40;
-        if (showSpeed == 4) speed = 60;
-        if (showSpeed == 3) speed = 80;
-        if (showSpeed == 2) speed = 100;
-        if (showSpeed == 1) speed = 120;
     }
 }

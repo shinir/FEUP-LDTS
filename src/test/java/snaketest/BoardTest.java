@@ -14,6 +14,7 @@ public class BoardTest {
     Snake baby;
     List<Wall> walls;
     List<Apple> juice;
+    Speed faísca_mcqueen;
     int width = 40, height = 20, speed = 0;
 
     @BeforeEach
@@ -48,6 +49,5 @@ public class BoardTest {
         juice = test.createApples();
         assert(juice != null);
         //assert(baby.getHead().equals(juice.getFirst()));
-
     }
 }
