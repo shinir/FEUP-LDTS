@@ -1,0 +1,34 @@
+/*
+    // switch-clause to move my character
+    // needs some work on it!!!
+
+    switch(key) {
+        case (KeyType.ArrowDown):
+            y = y + 1;
+            screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+            break;
+
+        case (KeyType.ArrowUp):
+            y = y - 1;
+            screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+
+        case (KeyType.ArrowLeft):
+            x = x - 1;
+            screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+            break;
+
+        case (KeyType.ArrowRight):
+            x = x + 1;
+            screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+            break;
+
+        case (key.getCharacter() == 'q'):
+            z = 1;
+            break;
+
+        case (KeyType.EOF):
+            z = 1;
+            break;
+        }
+    }
+*/

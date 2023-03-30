@@ -1,0 +1,3 @@
+To move press one of the four arrows.
+You can change your snake speed in
+settings.
